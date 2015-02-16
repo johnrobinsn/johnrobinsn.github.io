@@ -1,20 +1,21 @@
+// TODO add support for relative urls
+var baseURL = "http://johnrobinsn.github.io/pxScene2d/";
+
 var root = scene.root;
 
 var url;
-url = process.cwd() + "/../../images/skulls.png";
-var bg = scene.createImage({url:url,xStretch:2,yStretch:2,parent:root});
+url = baseURL + "images/skulls.png";
+var bg = scene.createImage({url:url,xStretch:2,yStretch:2,parent:root,
+                           autoSize:false});
 
-url = process.cwd() + "/../../images/radial_gradient.png";
-var bgShade = scene.createImage({url:url,xStretch:1,yStretch:1,parent:root});
+url = baseURL + "images/radial_gradient.png";
+var bgShade = scene.createImage({url:url,xStretch:1,yStretch:1,parent:root,
+                                autoSize:false});
 
 var txt1 = scene.createText({x:10,text:"",parent:root});
 
-url = process.cwd() + "/../../images/ball.png"
-var ball = scene.createImage({url:url,x:450,y:350,parent:root});
-ball.cx = ball.w/2;
-ball.cy = ball.h/2;
 
-// clean up these names and expose as properties off of some object
+// TODO clean up these names and expose as properties off of some object
 var pxInterpLinear = 0;
 var easeOutElastic = 1;
 var easeOutBounce  = 2;
@@ -62,14 +63,23 @@ function scale3(p) {
     p.animateTo({sx:1.0,sy:1.0}, 1.0, easeOutElastic, 0);
 }
 
-fancy(ball);
 
-scene.on('keydown', function(code, flags) {
-  console.log("keydown:" + code);
+url = baseURL + "images/ball.png"
+var ball = scene.createImage({url:url,x:450,y:350,parent:root,
+                              onReady: function(e) {
+				  var ball = e.target;
+                                  console.log("onReady received");
+                                  ball.cx = ball.w/2;
+                                  ball.cy = ball.h/2;
+                                  fancy(ball);
+                              }});
+
+scene.on('onKeyDown', function(e) {
+  console.log("onKeyDown:" + e.keyCode);
 });
 
-scene.on("mousemove", function(x, y) {
-    txt1.text = "" + x+ ", " + y;
+scene.on("onMouseMove", function(e) {
+    txt1.text = "" + e.x+ ", " + e.y;
 });
 
 function updateSize(w, h) {
@@ -80,5 +90,5 @@ function updateSize(w, h) {
     txt1.y = h-txt1.h;
 }
 
-scene.on("resize", updateSize);
+scene.on("onResize", function(e) {updateSize(e.w, e.h);});
 updateSize(scene.w, scene.h);

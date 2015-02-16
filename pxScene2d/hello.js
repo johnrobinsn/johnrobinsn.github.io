@@ -1,3 +1,6 @@
+// TODO add support for relative urls
+var baseURL = "http://johnrobinsn.github.io/pxScene2d/";
+
 scene.on('resize', function(width, height) {
   console.log('resize:' + width + ' height:' + height);
 });
@@ -20,7 +23,7 @@ function testScene()
         p.animateTo({h:600}, 0.5, 0, 1);
     }
     else if (i < 2) {
-      var url = process.cwd() + "/../../images/curve_rectangle.png";
+      var url = baseURL + "images/curve_rectangle.png";
       p = scene.createImage9({url:url});
       p.cx = p.w/2;
       p.cy = p.h/2;
@@ -29,7 +32,7 @@ function testScene()
       p.animateTo({w:600}, 0.5, 0, 1);
     }
     else if (i < n-3) {
-        var url = process.cwd() + "/../../images/banana.png";
+        var url = baseURL + "images/banana.png";
         p = scene.createImage({url:url});
         p.cx = p.w/2;
         p.cy = p.h/2;

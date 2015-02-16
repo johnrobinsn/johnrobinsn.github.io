@@ -6,7 +6,7 @@ function updateSize(w, h) {
     bg.h = h;
 }
 
-scene.on("resize", updateSize);
+scene.on("onResize", function(e){updateSize(e.w,e.h);});
 updateSize(scene.w, scene.h);
 
 // null or "" is the default face FreeSans.ttf
@@ -63,8 +63,6 @@ var faces = ["",
              "Pacifico.ttf",
             ];
 
-console.log("faces: ", faces.length);
-
 var scroll = scene.createImage({parent:root});
 var scrollContent = scene.createImage({parent:scroll});
 
@@ -75,7 +73,6 @@ for (var i=0; i < faces.length; i++)
 {
     var row = scene.createImage({parent:rowcontainer,y:p});
     var faceName = faces[i]?faces[i]:"FreeSans.ttf";
-    console.log(faceName);
     var t = scene.createText({text:"Enter in some text...", 
                               parent:row,x:10,
                               textColor:0x000000ff, pixelSize:36,
@@ -106,12 +103,10 @@ function selectRow(i) {
     var t = -scrollContent.y;
     if (row.y < t) {
         t = -row.y
-        console.log("one");
         scrollContent.animateTo({y:t},0.3, 0, 0);
     }
     else if (row.y+row.h-scene.h > t) {
         t = -(row.y+row.h-scene.h);
-        console.log("two");
         scrollContent.animateTo({y:t},0.3, 0, 0);
     }
 }
@@ -120,15 +115,11 @@ selectRow(currentRow);
 
 function scrollUp() {
     var numRows = rowcontainer.children.length;
-//    selectRow(currentRow>0?currentRow-1:0);
     selectRow(clamp(currentRow-1, 0, numRows-1));
 }
 
 function scrollDn() {
     var numRows = rowcontainer.children.length;
-    console.log("numRows", numRows);
-    console.log(currentRow);
-//    selectRow((currentRow<(numRows-1))?currentRow+1:numRows-1);
     selectRow(clamp(currentRow+1, 0, numRows-1));
 }
 
@@ -139,7 +130,8 @@ function updateText(s) {
 }
 
 var str = "";
-scene.on("keydown", function (keycode, flags) {
+scene.on("onKeyDown", function (e) {
+    var keycode = e.keyCode; var flags = e.flags;
     if (keycode == 38) scrollUp();
     else if (keycode == 40) scrollDn();
     else if (keycode == 8) {
@@ -148,7 +140,7 @@ scene.on("keydown", function (keycode, flags) {
     }
 });
 
-scene.on("onchar", function(c) {
+scene.on("onChar", function(c) {
     str += c;
     updateText(str);
 });

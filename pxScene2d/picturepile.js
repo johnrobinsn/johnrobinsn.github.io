@@ -1,24 +1,17 @@
+// TODO add support for relative urls
+var baseURL = "http://johnrobinsn.github.io/pxScene2d/";
+
 var root = scene.root;
 
-var bg = scene.createImage();
-var bgShade = scene.createImage();
+var url;
+url = baseURL + "images/skulls.png";
+var bg = scene.createImage({url:url,xStretch:2,yStretch:2,parent:root,
+                           autoSize:false});
+url = baseURL + "images/radial_gradient.png";
+var bgShade = scene.createImage({url:url,xStretch:1,yStretch:1,parent:root,
+                                autoSize:false});
 
-var txt1 = scene.createText();
-
-bg.url = process.cwd() + "/../../images/skulls.png";
-bg.xStretch = 2;
-bg.yStretch = 2;
-bg.parent = root;
-
-bgShade.url = process.cwd() + "/../../images/radial_gradient.png";
-bgShade.xStretch = 1;
-bgShade.yStretch = 1;
-bgShade.parent = root;
-
-txt1.x = 10;
-txt1.text = ""; // Just so there is some height so that we can position
-txt1.parent = root;
-
+var txt1 = scene.createText({x:10,text:"",parent:root});
 
 // clean up these names and expose as properties off of some object
 var pxInterpLinear = 0;
@@ -30,14 +23,6 @@ var pxStop = 4;
 function randomInt(from, to) {
 	var range = to-from;
 	return Math.round(Math.random()*range + from);
-}
-
-function set(o, p) {
-    for (var name in p) {
-        if (p.hasOwnProperty(name)) {
-            o[name] = p[name];
-        }    
-    }
 }
 
 function getImageURL() {
@@ -52,13 +37,12 @@ function getImageURL() {
     }
     else {
         var urls = [
-	          "flower1.jpg",
-	          "flower2.jpg",
-	          "flower3.jpg",
-	          "dolphin.jpg",
+	          "images/flower1.jpg",
+	          "images/flower2.jpg",
+	          "images/flower3.jpg",
+	          "images/dolphin.jpg",
 	      ];
-		    return process.cwd()+"/../../images/"+
-            urls[randomInt(0,urls.length-1)];
+	      return baseURL + urls[randomInt(0,urls.length-1)];
     }
 }
 
@@ -67,44 +51,39 @@ var numPictures = 0;
 function doIt() {
 
     // create an object to group some other objects
-	  var pictures = scene.createImage();;
+    var pictures = scene.createImage();;
     pictures.parent = root;
-
-	  var urlIndex = 0;
-		
+    
+    var urlIndex = 0;
+    
     function newPicture() {
-
+	
         var url = getImageURL();
-        var picture;
-            picture = scene.createImage({parent: pictures, x: -1000, y: 
-                                          randomInt(-200, 800), cx: 200, 
-                                          cy: 200, sx: 2, sy: 2, 
-                                          r: randomInt(-45,45), url:url});
-            
-        picture.animateTo({x:randomInt(100, 300)}, 1, pxStop, 0, function() {
-            if (true) {
-                if (pictures.numChildren > 10) {
-                    var f = pictures.getChild(0);
-                    
-                    f.animateTo({a: 0}, 0.75, 0, 0, function(f) {
-                        f.remove();
-                    });
-                }
-            }
-            else {
-                console.log(pictures.children.length);
-                if (pictures.children.length > 1) {
-                    var f = pictures.children[0];
-                    
-                    f.animateTo({a:0}, 0.75, 0, 0, function(f) {
-                        f.remove();
-                    });
-                }
-            }
-            newPicture();
-        });
+	
+        function animateIn(o) {
+            o.animateTo({x:randomInt(100, 300),y:randomInt(0,100),
+                         r:randomInt(-15,15),sx:0.75,sy:0.75}, 
+                        1, pxStop, 0,
+                        function() {
+                            if (pictures.numChildren > 10) {
+                                var f = pictures.getChild(0);
+                                f.animateTo({a: 0}, 0.75, 0, 0, 
+                                            function(f) {
+                                                f.remove();
+                                            });
+                            }
+                            newPicture();
+                        });
+        }
 
-        picture.animateTo({y:randomInt(0,100),r:randomInt(-15,15),sx:0.75,sy:0.75}, 1, pxStop, 0);
+
+        var picture = scene.createImage({onReady:animateIn,
+                                         parent: pictures, x: -1000, 
+                                         y:randomInt(-200, 800), cx: 200, 
+                                         cy: 200, sx: 2, sy: 2, 
+                                         r: randomInt(-45,45), url:url,
+					 onReady:function(e){animateIn(e.target);}
+                                        });
     }
 
     newPicture();
@@ -112,12 +91,12 @@ function doIt() {
 
 
 
-scene.on('keydown', function(code, flags) {
-  console.log("keydown:" + code);
+scene.on('onKeyDown', function(e) {
+  console.log("keydown:" + e.keyCode);
 });
 
-scene.on("mousemove", function(x, y) {
-    txt1.text = "" + x+ ", " + y;
+scene.on("onMouseMove", function(e) {
+    txt1.text = "" + e.x+ ", " + e.y;
 });
 
 function updateSize(w, h) {
@@ -128,7 +107,7 @@ function updateSize(w, h) {
     txt1.y = h-txt1.h;
 }
 
-scene.on("resize", updateSize);
+scene.on("onResize", function(e){updateSize(e.w,e.h);});
 updateSize(scene.w, scene.h);
 
 
