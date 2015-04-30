@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>pxScene - Scene Graph API</title>
+<link href="./style/style.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<div id="container">
+
+<h1>pxScene - Scene Graph API</h1>
+
+A 2d scene graph API supporting the following:
+<ul>
+<li>2d hierarchical affine scene graph.</li>
+<li>Small set of atomic UI elements</li>
+<li>Complex components built through composition.</li>
+<li>animation primitives</li>
+<li>rich masking primites</li>
+<li>more to come... </li>
+</ul>
+<br/>
+<br/>
+
+<h2><a name="scene"></a><code>Scene</code> instance</h2>
+<h3>Properties</h3>
+<dl>
+<dt class="object readonly">root</dt>
+<dd>returns the root <a href="#object">Object</a> for the scene</dd>
+<dt class="number readonly">w</dt>
+<dd>returns the width in pixel-sized units of the scene</dd>
+<dt class="number readonly">h</dt>
+<dd>returns the height in pixel-sized units of the scene</dd>
+</dl>
+<hr/>
+<h3>Methods</h3>
+<dl>
+<dt class="object">create(json)</dt>
+<dd>create a subtree of scene graph <a href="#object">Objects</a></dd>
+<dt class="object">createRectangle(json)</dt>
+<dd>create a <a href="#rectangle">Rectangle</a> object</dd>
+<dt class="image">createImage(json)</dt>
+<dd>create a <a href="#image">Image</a> object</dd>
+<dt class="image9">createImage9(json)</dt>
+<dd>create a <a href="#image9">Image9</a> object - a nine slice image</dd>
+<dt class="text">createText(json)</dt>
+<dd>create a <a href="#text">Text</a> object</dd>
+<dt class="scenecontainer">createScene(json)</dt>
+<dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>
+<dt class="void">on(string, function)</dt>
+<dd>register a callback function for the specified event</dd>
+<dt class="void">delListener(string, function)</dt>
+<dd>unregister a callback function for the specified event</dd>
+<dt class="void">setFocus(Object)</dt>
+<dd>set the keyboard focus to the specfied object</dd>
+<hr/>
+<h3>Constants</h3>
+<dl>
+<dt class="number">PX_LINEAR</dt>
+<dd>constant for specifying a linear tween</dd>
+<dt class="number">PX_EXP1</dt>
+<dd>constant for specifying a exp1 tween</dd>
+<dt class="number">PX_EXP2</dt>
+<dd>constant for specifying a exp2 tween</dd>
+<dt class="number">PX_EXP3</dt>
+<dd>constant for specifying a exp3 tween</dd>
+<dt class="number">PX_STOP</dt>
+<dd>constant for specifying a stop (easein) tween</dd>
+<dt class="number">PX_INQUAD</dt>
+<dd>constant for specifying a "inquad" tween</dd>
+<dt class="number">PX_INCUBIC</dt>
+<dd>constant for specifying a "incubic" tween</dd>
+<dt class="number">PX_INBACK</dt>
+<dd>constant for specifying a "inback" tween</dd>
+<dt class="number">PX_EASEINELASTiC</dt>
+<dd>constant for specifying a "easeinelastic" tween</dd>
+<dt class="number">PX_EASEOUTELASTIC</dt>
+<dd>constant for specifying a "easeoutelastic" tween</dd>
+<dt class="number">PX_EASEOUTBOUNCE</dt>
+<dd>constant for specifying a "easeoutbounce" tween</dd>
+</dl>
+<dl>
+<dt class="number">PX_END</dt>
+<dd>constant for use in the animateTo method.  the animation will end.</dd>
+<dt class="number">PX_SEESAW</dt>
+<dd>constant for use in the animateTo method. the animation with oscillate back and forth.</dd>
+<dt class="number">PX_LOOP</dt>
+<dd>constant for use in the animateTo method.  the animation will loop continuously.</dd>
+</dl>
+<hr/>
+<dl>
+<dt class="number">PX_NONE</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">PX_STRETCH</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">PX_REPEAT</dt>
+<dd>constant for use in image stretch options</dd>
+</dl>
+<hr/>
+<br/><br/>
+<h2><a name="object"></a><code>Object</code> instance</h2>
+<h3>Properties</h3>
+<dt class="object readonly">parent</dt>
+<dd>returns this object's parent <a href="#object">Object</a></dd>
+<dt class="number">x</dt>
+<dd>x-coordinate used as input into the object's transform function in pixel units</dd>
+<dt class="number">y</dt>
+<dd>y-coordinate used as input into the object's transform function in pixel units</dd>
+<dt class="number">w</dt>
+<dd>pixel unit width of the object</dd>
+<dt class="number">h</dt>
+<dd>pixel unit height of the object</dd>
+<dt class="number">cx</dt>
+<dd>x offset used as the center of rotation and scale</dd>
+<dt class="number">cy</dt>
+<dd>y offset used as the center of rotation and scale</dd>
+<dt class="number">sx</dt>
+<dd>scale factor in the x dimension</dd>
+<dt class="number">sy</dt>
+<dd>scale factor in the y dimension</dd>
+<dt class="number">a</dt>
+<dd>opacity of the object [0-1]</dd>
+<dt class="number">r</dt>
+<dd>angle of rotation in degrees</dd>
+<dt class="string">id</dt>
+<dd>associated string identifier for the object</dd>
+<dt class="boolean">interactive</dt>
+<dd>determines whether the object is mouse interactive. defaults to true.</dd>
+<dt class="boolean">painting</dt>
+<dd>when set to false the object and it's children will be snapshotted. when set to true the object and it's children will immediately reflect any changes</dd> 
+<dt class="boolean">clip</dt>
+<dd>determines whether the drawing done by the object and it's children will be clipped by the objects w and h properties. defaults to false.</dd>
+<dt class="string">mask</dt>
+<dd>specifies a url for an image to use as this object's alpha mask</dd>
+<dt class="boolean">drawAsMask</dt>
+<dd>determines whether this object will be used to define an alpha layer mask for the siblings of this object. defaults to false.</dd>
+<dt class="boolean">draw</dt>
+<dd>determines whether this object will be drawn</dd>
+<dt class="number">numChildren</dt>
+<dd>returns the number of immediate child objects that this object parents</dd>
+<dt class="array">children</dt>
+<dd>returns a collection of child objects for this object</dd>
+<hr/>
+<h3>Methods</h3>
+<dt class="object">getChild(i)</dt>
+<dd>returns the i-th child for this object</dd>
+<dt class="void">remove</dt>
+<dd>removes this object from the scene</dd>
+<dt class="void">removeAll</dt>
+<dd>removes all children and their descendents from the scene.</dd>
+<dt class="promise">animateTo(json, duration, tween, type)</dt>
+<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  type determines whether the animation ends, loops or oscillates (seesaw). returns a promise that will fulfill when the animation is complete.</dd>
+<dt class="void">on(string, function)</dt>
+<dd>registers a function callback for the specified event</dd>
+<dt class="void">delListener(string, function)</dt>
+<dd>unregisters a function callback for the specified event</dd>
+<hr/>
+<br/><br/>
+<h2><a name="rectangle"></a><code>Rectangle</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+<h3>Properties</h3>
+<dt class="number">fillColor</dt>
+<dd>specifies the color to fill the interior of the rectangle. eg. 0xff0000ff, opaque red, 0xrrggbbaa</dd>
+<dt class="number">lineColor</dt>
+<dd>specifies the color to stroke the edge of the rectangle. eg. 0xff0000ff, opaque red, 0xrrggbbaa</dd>
+<dt class="number">lineWidth</dt>
+<dd>species the width of the line to stroke around the ege of the rectangle. defaults to 0.</dd>
+<hr/>
+<br/><br/>
+<h2><a name="image"></a><code>Image</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+<h3>Properties</h3>
+<dt class="string">url</dt>
+<dd>specifies the url of the image to load. supports .png and .jpg</dd>
+<dt class="number">xStretch</dt>
+<dd>specifies the stretch option to use for the x-coordinate</dd>
+<dt class="number">yStretch<dt>
+<dd>specifies the stretch option to use for the y-coordinate</dd>
+<dt class="boolean">autoSize</dt>
+<dd>specifies whether the object is sized to the loaded image size when the object is ready</dd>
+<dt class="promise">ready</dt>
+<dd>returns a promise for when the object is ready</dd>
+<hr/>
+<br/><br/>
+<h2><a name="image9"></a><code>Image9</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+<h3>Properties</h3>
+<dt class="string">url</dt>
+<dd>specifies the url of the image to load. supports .png and .jpg</dd>
+<dt class="number">x1</dt>
+<dd>specifies the first slicing offset on the x-axis</dd>
+<dt class="number">y1</dt>
+<dd>specifies the first slicing offset on the y-axis</dd>
+<dt class="number">x2</dt>
+<dd>specifies the second slicing offset on the x-axis</dd>
+<dt class="number">y2</dt>
+<dd>specifies the second slicing offset on the y-axis</dd>
+<hr/>
+<br/><br/>
+<h2><a name="text"></a><code>Text</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+<h3>Properties</h3>
+<dt class="string">text</dt>
+<dd>specifies the text to render</dd>
+<dt class="number">textColor</dt>
+<dd>specifies the color to render the text. eg. 0xff0000ff,opaque red,0xrrggbbaa. defaults to opaque black [0x000000ff].</dd>
+<dt class="number">pixelSize</dt>
+<dd>specifies the pixelSize of the rendered text</dd>
+<dt class="string">faceURL</dt>
+<dd>specifies the url of the face to use.</dd>
+<hr/>
+<br/><br/>
+<h2><a name="scenecontainer"></a><code>SceneContainer</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+<h3>Properties</h3>
+<dt class="string">url</dt>
+<dd>specifies the url of the JavaScript to use for the child scene</dd>
+<hr/>
+<br/><br/>
+<div style="background-color:#eee;padding:10px;border-radius:7px;"><a href="http://johnrobinsn.github.io/pxScene2d/docs/">pxScene2d - Scene Graph API</a>.
+</div>
+
+<br/>
+</div>
+<script src="/projects/analytics.js"></script>
+</body>
+</html>
