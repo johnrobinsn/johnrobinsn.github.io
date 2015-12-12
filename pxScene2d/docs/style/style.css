@@ -143,6 +143,11 @@ content: 'bool';
 background-color: #536895;
 }
 
+dt.function:after { 
+content: 'function';
+background-color: #53DDDD;
+}
+
 .hint {
 display: block;
 color: #666;

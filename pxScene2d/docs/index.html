@@ -45,6 +45,8 @@ A 2d scene graph API supporting the following:
 <dd>create a <a href="#image9">Image9</a> object - a nine slice image</dd>
 <dt class="text">createText(json)</dt>
 <dd>create a <a href="#text">Text</a> object</dd>
+<dt class="text">createTextBox(json)</dt>
+<dd>create a <a href="#textBox">TextBox</a> object</dd>
 <dt class="scenecontainer">createScene(json)</dt>
 <dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>
 <dt class="void">on(string, function)</dt>
@@ -170,9 +172,9 @@ A 2d scene graph API supporting the following:
 <h3>Properties</h3>
 <dt class="string">url</dt>
 <dd>specifies the url of the image to load. supports .png and .jpg</dd>
-<dt class="number">xStretch</dt>
+<dt class="number">stretchX</dt>
 <dd>specifies the stretch option to use for the x-coordinate</dd>
-<dt class="number">yStretch<dt>
+<dt class="number">stretchY<dt>
 <dd>specifies the stretch option to use for the y-coordinate</dd>
 <dt class="boolean">autoSize</dt>
 <dd>specifies whether the object is sized to the loaded image size when the object is ready</dd>
@@ -202,8 +204,59 @@ A 2d scene graph API supporting the following:
 <dd>specifies the color to render the text. eg. 0xff0000ff,opaque red,0xrrggbbaa. defaults to opaque black [0x000000ff].</dd>
 <dt class="number">pixelSize</dt>
 <dd>specifies the pixelSize of the rendered text</dd>
-<dt class="string">faceURL</dt>
+<dt class="string">fontUrl</dt>
 <dd>specifies the url of the face to use.</dd>
+<hr/>
+<br/><br/>
+<h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
+<h3>Properties</h3>
+<dt class="boolean">wordWrap</dt>
+<dd>when width > 0, and wordWrap is true, wraps text at width of text box</dd>
+<dt class="number">xStartPos</dt>
+<dd>x position relative to the text box object, in pixels, for the first line of text only, similar to an indent</dd>
+<dt class="number">xStopPos</dt>
+<dd>x position where text must stop flowing on the last line of text only.  If ellipses are applied, the ellipses must also stop at this location.  
+<br/>NOTE:  xStartPos and xStopPos are only applied when horizontalAlign=LEFT.
+<br/>NOTE:  xStopPos can only be applied when truncation is true.</dd>
+<dt class="boolean">ellipsis</dt>
+<dd>indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE.</dd>
+<dt class="number">truncation</dt>
+<dd>indicates what type of truncation is to be applied to the text if it does not fit within the text box dimensions.
+<li>NONE - no truncation (constant value: 0)</li>
+<li>TRUNCATE - text is truncated at the bottom of the text box object.  The last word may be partially truncated.  (constant value: 1)</li>
+<li>TRUNCATE_AT_WORD_BOUNDARY - text is truncated at the bottom of the text box object.  Truncation occurs at the word boundary. (constant value: 2)</li>
+</dd>
+<dt class="number">alignHorizontal</dt>
+<dd>vertical alignment to be applied to text within the text box dimensions
+<li>TOP - text is vertically aligned at the top.  Default. (constant value: 0)</li>
+<li>CENTER -  - text is vertically aligned at the center. (constant value: 1)</li>
+<li>BOTTOM - text is vertically aligned at the bottom. (constant value: 2)</li>
+</dd>
+<dt class="number">alignVertical</dt>
+<dd>horizontal alignment to be applied to text within the TextBox dimensions
+<li>LEFT - text is horizontally aligned to the left.  Default. (constant value: 0)</li>
+<li>CENTER - text is horizontally aligned to the center. (constant value: 1)</li>
+<li>RIGHT - text is horizontally aligned to the right. (constant value: 2)</li>
+</dd>
+<dt class="number">leading</dt>
+<dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.</dd>
+</dd>
+<dt class="function">getFontMetrics</dt>
+<dd>Returns information about the font face (font and size).  It does not convey information about the text of the font.  See section 3.a in http://www.freetype.org/freetype2/docs/tutorial/step2.html.  The returned object has the following properties:
+<br/>(Soon to be deprecated.) <br/>
+<li>height - float - the distance between baselines</li>
+<li>ascent - float - the distance from the baseline to the font ascender (note that this is a hint, not a solid rule)</li>
+<li>descent - float - the distance from the baseline to the font descender  (note that this is a hint, not a solid rule)</li>
+<li>naturalLeading – float – the distance that must be placed between two lines of text (See linegap in section 2 in http://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html#section-1)</li>
+<li>baseline – float – the baseline position for the first line of text in this widget</li>
+</dd>
+<dt class="function">measureText</dt>
+<dd>returns an object with the following properties (measurements are relative to (x,y) of the TextBox object):
+<li>bounds - object - {x1:0, y1:0, x2:0, y2:0} - The two points representing the bounding rectangle of the complete text</li>
+<li>charFirst - {x:0, y:0} - The x position represents the left most rendered pixel of the first character on the first line of text. The y position represents the baseline.</li>
+<li>charLast - {x:0, y:0} - The x position represents the right most rendered pixel of the last character on the last line of text.  The y position represents the baseline.</li>
+</li>
+</dd>
 <hr/>
 <br/><br/>
 <h2><a name="scenecontainer"></a><code>SceneContainer</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
