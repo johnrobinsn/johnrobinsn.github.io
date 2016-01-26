@@ -36,8 +36,22 @@ A 2d scene graph API supporting the following:
 <h3>Methods</h3>
 <dl>
 <dt class="object">create(json)</dt>
-<dd>create a subtree of scene graph <a href="#object">Objects</a></dd>
-<dt class="object">createRectangle(json)</dt>
+<dd>create a subtree of scene graph <a href="#object">Objects</a>
+<br/>Use json t: to construct specific object types: 
+<li><a href="#text">text</a></li>
+<li><a href="#textBox">textBox</a></li>
+<li><a href="#image">image</a></li>
+<li><a href="#image9">image9</a></li>
+<li><a href="#rectangle">rect</a></li>
+<li><a href="#object">object</a></li>
+<dt class="resource">create(json)</dt>
+<dd>create resources that can be shared
+<br/>Use json t: to construct specific resource types:
+<li><a href="#imageResource">imageResource</a></li>
+<li><a href="#fontResource">fontResource</a></li>
+</dd>
+</dd>
+<!--<dt class="object">createRectangle(json)</dt>
 <dd>create a <a href="#rectangle">Rectangle</a> object</dd>
 <dt class="image">createImage(json)</dt>
 <dd>create a <a href="#image">Image</a> object</dd>
@@ -48,7 +62,7 @@ A 2d scene graph API supporting the following:
 <dt class="text">createTextBox(json)</dt>
 <dd>create a <a href="#textBox">TextBox</a> object</dd>
 <dt class="scenecontainer">createScene(json)</dt>
-<dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>
+<dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>-->
 <dt class="void">on(string, function)</dt>
 <dd>register a callback function for the specified event</dd>
 <dt class="void">delListener(string, function)</dt>
@@ -132,12 +146,12 @@ A 2d scene graph API supporting the following:
 <dd>when set to false the object and it's children will be snapshotted. when set to true the object and it's children will immediately reflect any changes</dd> 
 <dt class="boolean">clip</dt>
 <dd>determines whether the drawing done by the object and it's children will be clipped by the objects w and h properties. defaults to false.</dd>
-<dt class="string">mask</dt>
-<dd>specifies a url for an image to use as this object's alpha mask</dd>
-<dt class="boolean">drawAsMask</dt>
+<dt class="boolean">mask</dt>
 <dd>determines whether this object will be used to define an alpha layer mask for the siblings of this object. defaults to false.</dd>
 <dt class="boolean">draw</dt>
 <dd>determines whether this object will be drawn</dd>
+<dt class="boolean">hitTest</dt>
+<dd>????</dd>
 <dt class="number">numChildren</dt>
 <dd>returns the number of immediate child objects that this object parents</dd>
 <dt class="array">children</dt>
@@ -180,6 +194,10 @@ A 2d scene graph API supporting the following:
 <dd>specifies whether the object is sized to the loaded image size when the object is ready</dd>
 <dt class="promise">ready</dt>
 <dd>returns a promise for when the object is ready</dd>
+<dt class="resource">resource</dt>
+<dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image</dd>
+<br/>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="image9"></a><code>Image9</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
@@ -194,6 +212,11 @@ A 2d scene graph API supporting the following:
 <dd>specifies the second slicing offset on the x-axis</dd>
 <dt class="number">y2</dt>
 <dd>specifies the second slicing offset on the y-axis</dd>
+<dd>returns a promise for when the object is ready</dd>
+<dt class="resource">resource</dt>
+<dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image9</dd>
+<br/>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image9.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="text"></a><code>Text</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
@@ -206,6 +229,10 @@ A 2d scene graph API supporting the following:
 <dd>specifies the pixelSize of the rendered text</dd>
 <dt class="string">fontUrl</dt>
 <dd>specifies the url of the face to use.</dd>
+<dt class="resource">font</dt>
+<dd>specifies the <a href="#fontResource"><code>fontResource</code></a> to be used by this text</dd>
+<br/>
+<dd>Note that setting url will create a <a href="#fontResource"><code>fontResource</code></a> and set the font property for this text.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
@@ -241,16 +268,7 @@ A 2d scene graph API supporting the following:
 <dt class="number">leading</dt>
 <dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.</dd>
 </dd>
-<dt class="function">getFontMetrics</dt>
-<dd>Returns information about the font face (font and size).  It does not convey information about the text of the font.  See section 3.a in http://www.freetype.org/freetype2/docs/tutorial/step2.html.  The returned object has the following properties:
-<br/>(Soon to be deprecated.) <br/>
-<li>height - float - the distance between baselines</li>
-<li>ascent - float - the distance from the baseline to the font ascender (note that this is a hint, not a solid rule)</li>
-<li>descent - float - the distance from the baseline to the font descender  (note that this is a hint, not a solid rule)</li>
-<li>naturalLeading – float – the distance that must be placed between two lines of text (See linegap in section 2 in http://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html#section-1)</li>
-<li>baseline – float – the baseline position for the first line of text in this widget</li>
-</dd>
-<dt class="function">measureText</dt>
+<dt class="object">measureText</dt>
 <dd>returns an object with the following properties (measurements are relative to (x,y) of the TextBox object):
 <li>bounds - object - {x1:0, y1:0, x2:0, y2:0} - The two points representing the bounding rectangle of the complete text</li>
 <li>charFirst - {x:0, y:0} - The x position represents the left most rendered pixel of the first character on the first line of text. The y position represents the baseline.</li>
@@ -264,7 +282,53 @@ A 2d scene graph API supporting the following:
 <dt class="string">url</dt>
 <dd>specifies the url of the JavaScript to use for the child scene</dd>
 <hr/>
+
 <br/><br/>
+<h2><a name="resource"></a><code>Resource</code> instance</h2>
+<h3>Properties</h3>
+<dt class="string">url</dt>
+<dd>url to the resource to be loaded</dd>
+<dt class="promise">ready</dt>
+<dd>returns a promise when the resource is loaded</dd>
+<dt class="array">loadStatus</dt>
+<dd>array of status values</dd>
+<hr/>
+
+<br/><br/>
+<h2><a name="imageResource"></a><code>imageResource</code> instance inherits from <a href="#resource"><code>Resource</code></a></h2>
+<h3>Properties</h3>
+<dt class="number">w</dt>
+<dd>pixel unit width of the image</dd>
+<dt class="number">h</dt>
+<dd>pixel unit height of the image</dd>
+<hr/>
+
+<br/><br/>
+<h2><a name="fontResource"></a><code>fontResource</code> instance inherits from <a href="#resource"><code>Resource</code></a></h2>
+<hr/>
+<h3>Methods</h3>
+<dt class="object">getFontMetrics(pixelSize)</dt>
+<dd>Returns information about the font based on pixelSize.  See section 3.a in http://www.freetype.org/freetype2/docs/tutorial/step2.html.  The returned object has the following properties:
+<li>height - float - the distance between baselines</li>
+<li>ascent - float - the distance from the baseline to the font ascender (note that this is a hint, not a solid rule)</li>
+<li>descent - float - the distance from the baseline to the font descender  (note that this is a hint, not a solid rule)</li>
+<li>naturalLeading - float - the distance that must be placed between two lines of text (See linegap in section 2 in http://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html#section-1)</li>
+<li>baseline - float - the baseline position for a line of text</li>
+</dd>
+<hr/>
+<br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
 <div style="background-color:#eee;padding:10px;border-radius:7px;"><a href="http://johnrobinsn.github.io/pxScene2d/docs/">Version: Bleeding Edge</a>.
 </div>
 

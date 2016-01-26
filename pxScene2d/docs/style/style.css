@@ -143,8 +143,8 @@ content: 'bool';
 background-color: #536895;
 }
 
-dt.function:after { 
-content: 'function';
+dt.resource:after { 
+content: 'Resource';
 background-color: #53DDDD;
 }
 
