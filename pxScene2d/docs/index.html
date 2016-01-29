@@ -16,7 +16,7 @@ A 2d scene graph API supporting the following:
 <li>Small set of atomic UI elements</li>
 <li>Complex components built through composition.</li>
 <li>animation primitives</li>
-<li>rich masking primites</li>
+<li>rich masking primitives</li>
 <li>more to come... </li>
 </ul>
 <br/>
@@ -31,6 +31,17 @@ A 2d scene graph API supporting the following:
 <dd>returns the width in pixel-sized units of the scene</dd>
 <dt class="number readonly">h</dt>
 <dd>returns the height in pixel-sized units of the scene</dd>
+<dt class="object">animation</dt>
+<dd><a href="#animation">animation</a> for animation-related constants</dd>
+<dt class="object">stretch</dt>
+<dd><a href="#stretch">stretch</a> for x/y stretch-related constants (for <a href="#image">image</a>)</dd>
+<dt class="object">alignVertical</dt>
+<dd><a href="#alignVertical">alignVertical</a> for vertical alignment-related constants (for <a href="#textBox">textBox</a>)</dd>
+<dt class="object">alignHorizontal</dt>
+<dd><a href="#alignHorizontal">alignHorizontal</a> for horizontal alignment-related constants (for <a href="#textBox">textBox</a>)</dd>
+<dt class="object">truncation</dt>
+<dd><a href="#truncation">truncation</a> for truncation-related constants (for <a href="#textBox">textBox</a>)</dd>
+
 </dl>
 <hr/>
 <h3>Methods</h3>
@@ -70,48 +81,8 @@ A 2d scene graph API supporting the following:
 <dt class="void">setFocus(Object)</dt>
 <dd>set the keyboard focus to the specfied object</dd>
 <hr/>
-<h3>Constants</h3>
-<dl>
-<dt class="number">PX_LINEAR</dt>
-<dd>constant for specifying a linear tween</dd>
-<dt class="number">PX_EXP1</dt>
-<dd>constant for specifying a exp1 tween</dd>
-<dt class="number">PX_EXP2</dt>
-<dd>constant for specifying a exp2 tween</dd>
-<dt class="number">PX_EXP3</dt>
-<dd>constant for specifying a exp3 tween</dd>
-<dt class="number">PX_STOP</dt>
-<dd>constant for specifying a stop (easein) tween</dd>
-<dt class="number">PX_INQUAD</dt>
-<dd>constant for specifying a "inquad" tween</dd>
-<dt class="number">PX_INCUBIC</dt>
-<dd>constant for specifying a "incubic" tween</dd>
-<dt class="number">PX_INBACK</dt>
-<dd>constant for specifying a "inback" tween</dd>
-<dt class="number">PX_EASEINELASTiC</dt>
-<dd>constant for specifying a "easeinelastic" tween</dd>
-<dt class="number">PX_EASEOUTELASTIC</dt>
-<dd>constant for specifying a "easeoutelastic" tween</dd>
-<dt class="number">PX_EASEOUTBOUNCE</dt>
-<dd>constant for specifying a "easeoutbounce" tween</dd>
-</dl>
-<dl>
-<dt class="number">PX_END</dt>
-<dd>constant for use in the animateTo method.  the animation will end.</dd>
-<dt class="number">PX_SEESAW</dt>
-<dd>constant for use in the animateTo method. the animation with oscillate back and forth.</dd>
-<dt class="number">PX_LOOP</dt>
-<dd>constant for use in the animateTo method.  the animation will loop continuously.</dd>
-</dl>
-<hr/>
-<dl>
-<dt class="number">PX_NONE</dt>
-<dd>constant for use in image stretch options</dd>
-<dt class="number">PX_STRETCH</dt>
-<dd>constant for use in image stretch options</dd>
-<dt class="number">PX_REPEAT</dt>
-<dd>constant for use in image stretch options</dd>
-</dl>
+
+
 <hr/>
 <br/><br/>
 <h2><a name="object"></a><code>Object</code> instance</h2>
@@ -165,7 +136,7 @@ A 2d scene graph API supporting the following:
 <dt class="void">removeAll</dt>
 <dd>removes all children and their descendents from the scene.</dd>
 <dt class="promise">animateTo(json, duration, tween, type)</dt>
-<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  type determines whether the animation ends, loops or oscillates (seesaw). returns a promise that will fulfill when the animation is complete.</dd>
+<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  Type (option) determines whether the animation ends, loops or oscillates. (See <a href="#animation">animation constants</a> for valid values.)Returns a promise that will fulfill when the animation is complete.</dd>
 <dt class="void">on(string, function)</dt>
 <dd>registers a function callback for the specified event</dd>
 <dt class="void">delListener(string, function)</dt>
@@ -187,17 +158,16 @@ A 2d scene graph API supporting the following:
 <dt class="string">url</dt>
 <dd>specifies the url of the image to load. supports .png and .jpg</dd>
 <dt class="number">stretchX</dt>
-<dd>specifies the stretch option to use for the x-coordinate</dd>
+<dd>specifies the stretch option to use for the x-coordinate. See <a href="#stretch">stretch constants.</a></dd>
 <dt class="number">stretchY<dt>
-<dd>specifies the stretch option to use for the y-coordinate</dd>
-<dt class="boolean">autoSize</dt>
-<dd>specifies whether the object is sized to the loaded image size when the object is ready</dd>
+<dd>specifies the stretch option to use for the y-coordinate. See <a href="#stretch">stretch constants.</a></dd>
 <dt class="promise">ready</dt>
 <dd>returns a promise for when the object is ready</dd>
 <dt class="resource">resource</dt>
 <dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image</dd>
 <br/>
-<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image.</dd>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image.
+<br/><br/> Note that w or h equal to -1 will cause the image to be rendered using the <a href="#imageResource"><code>imageResource</code></a>'s associated property.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="image9"></a><code>Image9</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
@@ -248,23 +218,11 @@ A 2d scene graph API supporting the following:
 <dt class="boolean">ellipsis</dt>
 <dd>indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE.</dd>
 <dt class="number">truncation</dt>
-<dd>indicates what type of truncation is to be applied to the text if it does not fit within the text box dimensions.
-<li>NONE - no truncation (constant value: 0)</li>
-<li>TRUNCATE - text is truncated at the bottom of the text box object.  The last word may be partially truncated.  (constant value: 1)</li>
-<li>TRUNCATE_AT_WORD_BOUNDARY - text is truncated at the bottom of the text box object.  Truncation occurs at the word boundary. (constant value: 2)</li>
-</dd>
+<dd>see <a href="#truncation">truncation constants</a></dd>
 <dt class="number">alignHorizontal</dt>
-<dd>vertical alignment to be applied to text within the text box dimensions
-<li>TOP - text is vertically aligned at the top.  Default. (constant value: 0)</li>
-<li>CENTER -  - text is vertically aligned at the center. (constant value: 1)</li>
-<li>BOTTOM - text is vertically aligned at the bottom. (constant value: 2)</li>
-</dd>
+<dd>see <a href="#alignHorizontal">horizontal alignment constants</a></dd>
 <dt class="number">alignVertical</dt>
-<dd>horizontal alignment to be applied to text within the TextBox dimensions
-<li>LEFT - text is horizontally aligned to the left.  Default. (constant value: 0)</li>
-<li>CENTER - text is horizontally aligned to the center. (constant value: 1)</li>
-<li>RIGHT - text is horizontally aligned to the right. (constant value: 2)</li>
-</dd>
+<dd>see <a href="#alignVertical">vertical alignment constants</a></dd>
 <dt class="number">leading</dt>
 <dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.</dd>
 </dd>
@@ -318,15 +276,102 @@ A 2d scene graph API supporting the following:
 <hr/>
 <br/><br/>
 
+<h2><a name="animation"></a><code>animation Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="array">interpolators</dt>
+<dd>returns a collection of valid TWEEN_ and EASE_ interpolator constants</dd>
+<dt class="number">TWEEN_LINEAR</dt>
+<dd>constant for specifying a linear tween</dd>
+<dt class="number">TWEEN_EXP1</dt>
+<dd>constant for specifying a exp1 tween</dd>
+<dt class="number">TWEEN_EXP2</dt>
+<dd>constant for specifying a exp2 tween</dd>
+<dt class="number">TWEEN_EXP3</dt>
+<dd>constant for specifying a exp3 tween</dd>
+<dt class="number">TWEEN_STOP</dt>
+<dd>constant for specifying a stop (easein) tween</dd>
+<dt class="number">EASE_IN_QUAD</dt>
+<dd>constant for specifying a "inquad" tween</dd>
+<dt class="number">EASE_IN_CUBIC</dt>
+<dd>constant for specifying a "incubic" tween</dd>
+<dt class="number">EASE_IN_BACK</dt>
+<dd>constant for specifying a "inback" tween</dd>
+<dt class="number">EASE_IN_ELASTiC</dt>
+<dd>constant for specifying a "easeinelastic" tween</dd>
+<dt class="number">EASE_OUT_ELASTIC</dt>
+<dd>constant for specifying a "easeoutelastic" tween</dd>
+<dt class="number">EASE_OUT_BOUNCE</dt>
+<dd>constant for specifying a "easeoutbounce" tween</dd>
+</dl>
+<dl>
+<dt class="number">OPTION_END</dt>
+<dd>constant for use as the type in the animateTo method.  the animation will end.</dd>
+<dt class="number">OPTION_OSCILLATE</dt>
+<dd>constant for use as the type in the animateTo method. the animation with oscillate back and forth.</dd>
+<dt class="number">OPTION_LOOP</dt>
+<dd>constant for use as the type in the animateTo method.  the animation will loop continuously.</dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="stretch"></a><code>stretch Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">NONE</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">STRETCH</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">REPEAT</dt>
+<dd>constant for use in image stretch options</dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="alignVertical"></a><code>Vertical Alignment Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">TOP</dt>
+<dd>begin text at the upper-most y-coordinate of the <a href="#textBox">textBox</a></dd>
+<dt class="number">CENTER</dt>
+<dd>center text vertically within the <a href="#textBox">textBox</a></dd>
+<dt class="number">BOTTOM</dt>
+<dd>justify text to the bottom of the <a href="#textBox">textBox</a></dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="alignHorizontal"></a><code>Horizontal Alignment Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">LEFT</dt>
+<dd>left-justify text in the <a href="#textBox">textBox</a></dd>
+<dt class="number">CENTER</dt>
+<dd>center text horizontally in the <a href="#textBox">textBox</a></dd>
+<dt class="number">RIGHT</dt>
+<dd>right-justify text in the <a href="#textBox">textBox</a></dd>
+</dl>
+<hr/>
+<br/><br/>
 
 
-
-
-
-
-
-
-
+<h2><a name="truncation"></a><code>Truncation Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">NONE</dt>
+<dd>text is not truncated</dd>
+<dt class="number">TRUNCATE</dt>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  The last word may be partially truncated</dd>
+<dt class="number">TRUNCATE_AT_WORD</dt>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  Truncation occurs at the word boundary.</dd>
+</dl>
+<hr/>
+<br/><br/>
 
 
 <div style="background-color:#eee;padding:10px;border-radius:7px;"><a href="http://johnrobinsn.github.io/pxScene2d/docs/">Version: Bleeding Edge</a>.
