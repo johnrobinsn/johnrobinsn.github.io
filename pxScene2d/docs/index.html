@@ -78,8 +78,8 @@ A 2d scene graph API supporting the following:
 <dd>register a callback function for the specified event</dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregister a callback function for the specified event</dd>
-<dt class="void">setFocus(Object)</dt>
-<dd>set the keyboard focus to the specfied object</dd>
+<dt class="void">getFocus(Object)</dt>
+<dd>will return the object that has keyboard focus</dd>
 <hr/>
 
 
@@ -123,6 +123,8 @@ A 2d scene graph API supporting the following:
 <dd>determines whether this object will be drawn</dd>
 <dt class="boolean">hitTest</dt>
 <dd>????</dd>
+<dt class="boolean">focus</dt>
+<dd>when set to true, this object will be given keyboard focus. the object that had previous focus will be blurred.</dd>
 <dt class="number">numChildren</dt>
 <dd>returns the number of immediate child objects that this object parents</dd>
 <dt class="array">children</dt>
