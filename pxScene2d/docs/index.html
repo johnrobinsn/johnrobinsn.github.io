@@ -16,7 +16,7 @@ A 2d scene graph API supporting the following:
 <li>Small set of atomic UI elements</li>
 <li>Complex components built through composition.</li>
 <li>animation primitives</li>
-<li>rich masking primites</li>
+<li>rich masking primitives</li>
 <li>more to come... </li>
 </ul>
 <br/>
@@ -31,13 +31,38 @@ A 2d scene graph API supporting the following:
 <dd>returns the width in pixel-sized units of the scene</dd>
 <dt class="number readonly">h</dt>
 <dd>returns the height in pixel-sized units of the scene</dd>
+<dt class="object">animation</dt>
+<dd><a href="#animation">animation</a> for animation-related constants</dd>
+<dt class="object">stretch</dt>
+<dd><a href="#stretch">stretch</a> for x/y stretch-related constants (for <a href="#image">image</a>)</dd>
+<dt class="object">alignVertical</dt>
+<dd><a href="#alignVertical">alignVertical</a> for vertical alignment-related constants (for <a href="#textBox">textBox</a>)</dd>
+<dt class="object">alignHorizontal</dt>
+<dd><a href="#alignHorizontal">alignHorizontal</a> for horizontal alignment-related constants (for <a href="#textBox">textBox</a>)</dd>
+<dt class="object">truncation</dt>
+<dd><a href="#truncation">truncation</a> for truncation-related constants (for <a href="#textBox">textBox</a>)</dd>
+
 </dl>
 <hr/>
 <h3>Methods</h3>
 <dl>
 <dt class="object">create(json)</dt>
-<dd>create a subtree of scene graph <a href="#object">Objects</a></dd>
-<dt class="object">createRectangle(json)</dt>
+<dd>create a subtree of scene graph <a href="#object">Objects</a>
+<br/>Use json t: to construct specific object types: 
+<li><a href="#text">text</a></li>
+<li><a href="#textBox">textBox</a></li>
+<li><a href="#image">image</a></li>
+<li><a href="#image9">image9</a></li>
+<li><a href="#rectangle">rect</a></li>
+<li><a href="#object">object</a></li>
+<dt class="resource">create(json)</dt>
+<dd>create resources that can be shared
+<br/>Use json t: to construct specific resource types:
+<li><a href="#imageResource">imageResource</a></li>
+<li><a href="#fontResource">fontResource</a></li>
+</dd>
+</dd>
+<!--<dt class="object">createRectangle(json)</dt>
 <dd>create a <a href="#rectangle">Rectangle</a> object</dd>
 <dt class="image">createImage(json)</dt>
 <dd>create a <a href="#image">Image</a> object</dd>
@@ -45,57 +70,31 @@ A 2d scene graph API supporting the following:
 <dd>create a <a href="#image9">Image9</a> object - a nine slice image</dd>
 <dt class="text">createText(json)</dt>
 <dd>create a <a href="#text">Text</a> object</dd>
+<dt class="text">createTextBox(json)</dt>
+<dd>create a <a href="#textBox">TextBox</a> object</dd>
 <dt class="scenecontainer">createScene(json)</dt>
-<dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>
+<dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>-->
 <dt class="void">on(string, function)</dt>
-<dd>register a callback function for the specified event</dd>
+<dd>registers a function callback for the specified event:
+<li>onMouseDown - parameter object has properties: x, y, flags </li>
+<li>onMouseUp - parameter object hasproperties: x, y, flags </li>
+<li>onMouseMove - parameter object has properties: x, y </li>
+<li>onMouseEnter </li>
+<li>onMouseLeave </li>
+<li>onFocus </li>
+<li>onBlur </li>
+<li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>
+<li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>
+<li>onChar  - parameter object has properties: target, charCode</li>
+<li>onSize - parameter object has properties w, h</li>
+</dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregister a callback function for the specified event</dd>
-<dt class="void">setFocus(Object)</dt>
-<dd>set the keyboard focus to the specfied object</dd>
+<dt class="void">getFocus(Object)</dt>
+<dd>will return the object that has keyboard focus</dd>
 <hr/>
-<h3>Constants</h3>
-<dl>
-<dt class="number">PX_LINEAR</dt>
-<dd>constant for specifying a linear tween</dd>
-<dt class="number">PX_EXP1</dt>
-<dd>constant for specifying a exp1 tween</dd>
-<dt class="number">PX_EXP2</dt>
-<dd>constant for specifying a exp2 tween</dd>
-<dt class="number">PX_EXP3</dt>
-<dd>constant for specifying a exp3 tween</dd>
-<dt class="number">PX_STOP</dt>
-<dd>constant for specifying a stop (easein) tween</dd>
-<dt class="number">PX_INQUAD</dt>
-<dd>constant for specifying a "inquad" tween</dd>
-<dt class="number">PX_INCUBIC</dt>
-<dd>constant for specifying a "incubic" tween</dd>
-<dt class="number">PX_INBACK</dt>
-<dd>constant for specifying a "inback" tween</dd>
-<dt class="number">PX_EASEINELASTiC</dt>
-<dd>constant for specifying a "easeinelastic" tween</dd>
-<dt class="number">PX_EASEOUTELASTIC</dt>
-<dd>constant for specifying a "easeoutelastic" tween</dd>
-<dt class="number">PX_EASEOUTBOUNCE</dt>
-<dd>constant for specifying a "easeoutbounce" tween</dd>
-</dl>
-<dl>
-<dt class="number">PX_END</dt>
-<dd>constant for use in the animateTo method.  the animation will end.</dd>
-<dt class="number">PX_SEESAW</dt>
-<dd>constant for use in the animateTo method. the animation with oscillate back and forth.</dd>
-<dt class="number">PX_LOOP</dt>
-<dd>constant for use in the animateTo method.  the animation will loop continuously.</dd>
-</dl>
-<hr/>
-<dl>
-<dt class="number">PX_NONE</dt>
-<dd>constant for use in image stretch options</dd>
-<dt class="number">PX_STRETCH</dt>
-<dd>constant for use in image stretch options</dd>
-<dt class="number">PX_REPEAT</dt>
-<dd>constant for use in image stretch options</dd>
-</dl>
+
+
 <hr/>
 <br/><br/>
 <h2><a name="object"></a><code>Object</code> instance</h2>
@@ -130,12 +129,14 @@ A 2d scene graph API supporting the following:
 <dd>when set to false the object and it's children will be snapshotted. when set to true the object and it's children will immediately reflect any changes</dd> 
 <dt class="boolean">clip</dt>
 <dd>determines whether the drawing done by the object and it's children will be clipped by the objects w and h properties. defaults to false.</dd>
-<dt class="string">mask</dt>
-<dd>specifies a url for an image to use as this object's alpha mask</dd>
-<dt class="boolean">drawAsMask</dt>
+<dt class="boolean">mask</dt>
 <dd>determines whether this object will be used to define an alpha layer mask for the siblings of this object. defaults to false.</dd>
 <dt class="boolean">draw</dt>
 <dd>determines whether this object will be drawn</dd>
+<dt class="boolean">hitTest</dt>
+<dd>????</dd>
+<dt class="boolean">focus</dt>
+<dd>when set to true, this object will be given keyboard focus. the object that had previous focus will be blurred.</dd>
 <dt class="number">numChildren</dt>
 <dd>returns the number of immediate child objects that this object parents</dd>
 <dt class="array">children</dt>
@@ -149,9 +150,21 @@ A 2d scene graph API supporting the following:
 <dt class="void">removeAll</dt>
 <dd>removes all children and their descendents from the scene.</dd>
 <dt class="promise">animateTo(json, duration, tween, type)</dt>
-<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  type determines whether the animation ends, loops or oscillates (seesaw). returns a promise that will fulfill when the animation is complete.</dd>
+<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  Type (option) determines whether the animation ends, loops or oscillates. (See <a href="#animation">animation constants</a> for valid values.)Returns a promise that will fulfill when the animation is complete.</dd>
 <dt class="void">on(string, function)</dt>
-<dd>registers a function callback for the specified event</dd>
+<dd>registers a function callback for the specified event:
+<li>onMouseDown - parameter object has properties: x, y, flags </li>
+<li>onMouseUp - parameter object hasproperties: x, y, flags </li>
+<li>onMouseMove - parameter object has properties: x, y </li>
+<li>onMouseEnter </li>
+<li>onMouseLeave </li>
+<li>onFocus </li>
+<li>onBlur </li>
+<li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>
+<li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>
+<li>onChar  - parameter object has properties: target, charCode</li>
+<li>onSize - parameter object has properties w, h</li>
+</dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregisters a function callback for the specified event</dd>
 <hr/>
@@ -170,28 +183,37 @@ A 2d scene graph API supporting the following:
 <h3>Properties</h3>
 <dt class="string">url</dt>
 <dd>specifies the url of the image to load. supports .png and .jpg</dd>
-<dt class="number">xStretch</dt>
-<dd>specifies the stretch option to use for the x-coordinate</dd>
-<dt class="number">yStretch<dt>
-<dd>specifies the stretch option to use for the y-coordinate</dd>
-<dt class="boolean">autoSize</dt>
-<dd>specifies whether the object is sized to the loaded image size when the object is ready</dd>
+<dt class="number">stretchX</dt>
+<dd>specifies the stretch option to use for the x-coordinate. See <a href="#stretch">stretch constants.</a></dd>
+<dt class="number">stretchY<dt>
+<dd>specifies the stretch option to use for the y-coordinate. See <a href="#stretch">stretch constants.</a></dd>
 <dt class="promise">ready</dt>
 <dd>returns a promise for when the object is ready</dd>
+<dt class="resource">resource</dt>
+<dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image</dd>
+<br/>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the resource property for this image.
+<br/><br/> Note that w or h equal to -1 will cause the image to be rendered using the <a href="#imageResource"><code>imageResource</code></a>'s associated property.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="image9"></a><code>Image9</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
 <h3>Properties</h3>
 <dt class="string">url</dt>
 <dd>specifies the url of the image to load. supports .png and .jpg</dd>
-<dt class="number">x1</dt>
+<dt class="number">insetLeft</dt>
 <dd>specifies the first slicing offset on the x-axis</dd>
-<dt class="number">y1</dt>
+<dt class="number">insetTop</dt>
 <dd>specifies the first slicing offset on the y-axis</dd>
-<dt class="number">x2</dt>
+<dt class="number">insetRight</dt>
 <dd>specifies the second slicing offset on the x-axis</dd>
-<dt class="number">y2</dt>
+<dt class="number">insetBottom</dt>
 <dd>specifies the second slicing offset on the y-axis</dd>
+<dt class="promise">ready</dt>
+<dd>returns a promise for when the object is ready</dd>
+<dt class="resource">resource</dt>
+<dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image9</dd>
+<br/>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the resource property for this image9.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="text"></a><code>Text</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
@@ -202,8 +224,42 @@ A 2d scene graph API supporting the following:
 <dd>specifies the color to render the text. eg. 0xff0000ff,opaque red,0xrrggbbaa. defaults to opaque black [0x000000ff].</dd>
 <dt class="number">pixelSize</dt>
 <dd>specifies the pixelSize of the rendered text</dd>
-<dt class="string">faceURL</dt>
+<dt class="string">fontUrl</dt>
 <dd>specifies the url of the face to use.</dd>
+<dt class="resource">font</dt>
+<dd>specifies the <a href="#fontResource"><code>fontResource</code></a> to be used by this text</dd>
+<br/>
+<dd>Note that setting url will create a <a href="#fontResource"><code>fontResource</code></a> and set the font property for this text.</dd>
+<hr/>
+<br/><br/>
+<h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
+<h3>Properties</h3>
+<dt class="boolean">wordWrap</dt>
+<dd>when width > 0, and wordWrap is true, wraps text at width of text box</dd>
+<dt class="number">xStartPos</dt>
+<dd>x position relative to the text box object, in pixels, for the first line of text only, similar to an indent</dd>
+<dt class="number">xStopPos</dt>
+<dd>x position where text must stop flowing on the last line of text only.  If ellipses are applied, the ellipses must also stop at this location.  
+<br/>NOTE:  xStartPos and xStopPos are only applied when horizontalAlign=LEFT.
+<br/>NOTE:  xStopPos can only be applied when truncation is true.</dd>
+<dt class="boolean">ellipsis</dt>
+<dd>indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE.</dd>
+<dt class="number">truncation</dt>
+<dd>see <a href="#truncation">truncation constants</a></dd>
+<dt class="number">alignHorizontal</dt>
+<dd>see <a href="#alignHorizontal">horizontal alignment constants</a></dd>
+<dt class="number">alignVertical</dt>
+<dd>see <a href="#alignVertical">vertical alignment constants</a></dd>
+<dt class="number">leading</dt>
+<dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.</dd>
+</dd>
+<dt class="object">measureText</dt>
+<dd>returns an object with the following properties (measurements are relative to (x,y) of the TextBox object):
+<li>bounds - object - {x1:0, y1:0, x2:0, y2:0} - The two points representing the bounding rectangle of the complete text</li>
+<li>charFirst - {x:0, y:0} - The x position represents the left most rendered pixel of the first character on the first line of text. The y position represents the baseline.</li>
+<li>charLast - {x:0, y:0} - The x position represents the right most rendered pixel of the last character on the last line of text.  The y position represents the baseline.</li>
+</li>
+</dd>
 <hr/>
 <br/><br/>
 <h2><a name="scenecontainer"></a><code>SceneContainer</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
@@ -211,7 +267,145 @@ A 2d scene graph API supporting the following:
 <dt class="string">url</dt>
 <dd>specifies the url of the JavaScript to use for the child scene</dd>
 <hr/>
+
 <br/><br/>
+<h2><a name="resource"></a><code>Resource</code> instance</h2>
+<h3>Properties</h3>
+<dt class="string">url</dt>
+<dd>url to the resource to be loaded</dd>
+<dt class="promise">ready</dt>
+<dd>returns a promise when the resource is loaded</dd>
+<dt class="array">loadStatus</dt>
+<dd>array of status values</dd>
+<hr/>
+
+<br/><br/>
+<h2><a name="imageResource"></a><code>imageResource</code> instance inherits from <a href="#resource"><code>Resource</code></a></h2>
+<h3>Properties</h3>
+<dt class="number">w</dt>
+<dd>pixel unit width of the image</dd>
+<dt class="number">h</dt>
+<dd>pixel unit height of the image</dd>
+<hr/>
+
+<br/><br/>
+<h2><a name="fontResource"></a><code>fontResource</code> instance inherits from <a href="#resource"><code>Resource</code></a></h2>
+<hr/>
+<h3>Methods</h3>
+<dt class="object">getFontMetrics(pixelSize)</dt>
+<dd>Returns information about the font based on pixelSize.  See section 3.a in http://www.freetype.org/freetype2/docs/tutorial/step2.html.  The returned object has the following properties:
+<li>height - float - the distance between baselines</li>
+<li>ascent - float - the distance from the baseline to the font ascender (note that this is a hint, not a solid rule)</li>
+<li>descent - float - the distance from the baseline to the font descender  (note that this is a hint, not a solid rule)</li>
+<li>naturalLeading - float - the distance that must be placed between two lines of text (See linegap in section 2 in http://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html#section-1)</li>
+<li>baseline - float - the baseline position for a line of text</li>
+</dd>
+<dt class="object">measureText(pixelSize, textToMeasure)</dt>
+<dd>Returns an object from which height and width of the measured text can be obtained.  Note that this measurement does not consider truncation, word wrapping or alignment that could be used in a TextBox containing this text.
+<li>height - float - the height of the text</li>
+<li>width - float - the width of the text</li>
+</dd>
+<hr/>
+<br/><br/>
+
+<h2><a name="animation"></a><code>animation Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="array">interpolators</dt>
+<dd>returns a collection of valid TWEEN_ and EASE_ interpolator constants</dd>
+<dt class="number">TWEEN_LINEAR</dt>
+<dd>constant for specifying a linear tween</dd>
+<dt class="number">TWEEN_EXP1</dt>
+<dd>constant for specifying a exp1 tween</dd>
+<dt class="number">TWEEN_EXP2</dt>
+<dd>constant for specifying a exp2 tween</dd>
+<dt class="number">TWEEN_EXP3</dt>
+<dd>constant for specifying a exp3 tween</dd>
+<dt class="number">TWEEN_STOP</dt>
+<dd>constant for specifying a stop (easein) tween</dd>
+<dt class="number">EASE_IN_QUAD</dt>
+<dd>constant for specifying a "inquad" tween</dd>
+<dt class="number">EASE_IN_CUBIC</dt>
+<dd>constant for specifying a "incubic" tween</dd>
+<dt class="number">EASE_IN_BACK</dt>
+<dd>constant for specifying a "inback" tween</dd>
+<dt class="number">EASE_IN_ELASTiC</dt>
+<dd>constant for specifying a "easeinelastic" tween</dd>
+<dt class="number">EASE_OUT_ELASTIC</dt>
+<dd>constant for specifying a "easeoutelastic" tween</dd>
+<dt class="number">EASE_OUT_BOUNCE</dt>
+<dd>constant for specifying a "easeoutbounce" tween</dd>
+</dl>
+<dl>
+<dt class="number">OPTION_END</dt>
+<dd>constant for use as the type in the animateTo method.  the animation will end.</dd>
+<dt class="number">OPTION_OSCILLATE</dt>
+<dd>constant for use as the type in the animateTo method. the animation with oscillate back and forth.</dd>
+<dt class="number">OPTION_LOOP</dt>
+<dd>constant for use as the type in the animateTo method.  the animation will loop continuously.</dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="stretch"></a><code>stretch Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">NONE</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">STRETCH</dt>
+<dd>constant for use in image stretch options</dd>
+<dt class="number">REPEAT</dt>
+<dd>constant for use in image stretch options</dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="alignVertical"></a><code>Vertical Alignment Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">TOP</dt>
+<dd>begin text at the upper-most y-coordinate of the <a href="#textBox">textBox</a></dd>
+<dt class="number">CENTER</dt>
+<dd>center text vertically within the <a href="#textBox">textBox</a></dd>
+<dt class="number">BOTTOM</dt>
+<dd>justify text to the bottom of the <a href="#textBox">textBox</a></dd>
+</dl>
+<hr/>
+<br/><br/>
+
+<h2><a name="alignHorizontal"></a><code>Horizontal Alignment Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">LEFT</dt>
+<dd>left-justify text in the <a href="#textBox">textBox</a></dd>
+<dt class="number">CENTER</dt>
+<dd>center text horizontally in the <a href="#textBox">textBox</a></dd>
+<dt class="number">RIGHT</dt>
+<dd>right-justify text in the <a href="#textBox">textBox</a></dd>
+</dl>
+<hr/>
+<br/><br/>
+
+
+<h2><a name="truncation"></a><code>Truncation Constants</code></h2>
+<hr/>
+<h3>Properties</h3>
+<dl>
+<dt class="number">NONE</dt>
+<dd>text is not truncated</dd>
+<dt class="number">TRUNCATE</dt>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  The last word may be partially truncated</dd>
+<dt class="number">TRUNCATE_AT_WORD</dt>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  Truncation occurs at the word boundary.</dd>
+</dl>
+<hr/>
+<br/><br/>
+
+
 <div style="background-color:#eee;padding:10px;border-radius:7px;"><a href="http://johnrobinsn.github.io/pxScene2d/docs/">Version: Bleeding Edge</a>.
 </div>
 
