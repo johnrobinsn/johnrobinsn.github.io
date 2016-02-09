@@ -192,7 +192,7 @@ A 2d scene graph API supporting the following:
 <dt class="resource">resource</dt>
 <dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image</dd>
 <br/>
-<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image.
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the resource property for this image.
 <br/><br/> Note that w or h equal to -1 will cause the image to be rendered using the <a href="#imageResource"><code>imageResource</code></a>'s associated property.</dd>
 <hr/>
 <br/><br/>
@@ -200,19 +200,20 @@ A 2d scene graph API supporting the following:
 <h3>Properties</h3>
 <dt class="string">url</dt>
 <dd>specifies the url of the image to load. supports .png and .jpg</dd>
-<dt class="number">x1</dt>
+<dt class="number">insetLeft</dt>
 <dd>specifies the first slicing offset on the x-axis</dd>
-<dt class="number">y1</dt>
+<dt class="number">insetTop</dt>
 <dd>specifies the first slicing offset on the y-axis</dd>
-<dt class="number">x2</dt>
+<dt class="number">insetRight</dt>
 <dd>specifies the second slicing offset on the x-axis</dd>
-<dt class="number">y2</dt>
+<dt class="number">insetBottom</dt>
 <dd>specifies the second slicing offset on the y-axis</dd>
+<dt class="promise">ready</dt>
 <dd>returns a promise for when the object is ready</dd>
 <dt class="resource">resource</dt>
 <dd>specifies the <a href="#imageResource"><code>imageResource</code></a> to be used by this image9</dd>
 <br/>
-<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the font property for this image9.</dd>
+<dd>Note that setting url will create an <a href="#imageResource"><code>imageResource</code></a> and set the resource property for this image9.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="text"></a><code>Text</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
