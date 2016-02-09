@@ -75,7 +75,19 @@ A 2d scene graph API supporting the following:
 <dt class="scenecontainer">createScene(json)</dt>
 <dd>create a <a href="#scenecontainer">SceneContainer</a> object</dd>-->
 <dt class="void">on(string, function)</dt>
-<dd>register a callback function for the specified event</dd>
+<dd>registers a function callback for the specified event:
+<li>onMouseDown - parameter object has properties: x, y, flags </li>
+<li>onMouseUp - parameter object hasproperties: x, y, flags </li>
+<li>onMouseMove - parameter object has properties: x, y </li>
+<li>onMouseEnter </li>
+<li>onMouseLeave </li>
+<li>onFocus </li>
+<li>onBlur </li>
+<li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>
+<li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>
+<li>onChar  - parameter object has properties: target, charCode</li>
+<li>onSize - parameter object has properties w, h</li>
+</dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregister a callback function for the specified event</dd>
 <dt class="void">getFocus(Object)</dt>
@@ -140,7 +152,19 @@ A 2d scene graph API supporting the following:
 <dt class="promise">animateTo(json, duration, tween, type)</dt>
 <dd>tween the object's properties to the targets specified over the specified duration using the tween function.  Type (option) determines whether the animation ends, loops or oscillates. (See <a href="#animation">animation constants</a> for valid values.)Returns a promise that will fulfill when the animation is complete.</dd>
 <dt class="void">on(string, function)</dt>
-<dd>registers a function callback for the specified event</dd>
+<dd>registers a function callback for the specified event:
+<li>onMouseDown - parameter object has properties: x, y, flags </li>
+<li>onMouseUp - parameter object hasproperties: x, y, flags </li>
+<li>onMouseMove - parameter object has properties: x, y </li>
+<li>onMouseEnter </li>
+<li>onMouseLeave </li>
+<li>onFocus </li>
+<li>onBlur </li>
+<li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>
+<li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>
+<li>onChar  - parameter object has properties: target, charCode</li>
+<li>onSize - parameter object has properties w, h</li>
+</dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregisters a function callback for the specified event</dd>
 <hr/>
