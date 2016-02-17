@@ -235,23 +235,23 @@ A 2d scene graph API supporting the following:
 <h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
 <h3>Properties</h3>
 <dt class="boolean">wordWrap</dt>
-<dd>when width > 0, and wordWrap is true, wraps text at width of text box</dd>
+<dd>when width > 0, and wordWrap is true, wraps text at width of text box. defaults to false.</dd>
 <dt class="number">xStartPos</dt>
-<dd>x position relative to the text box object, in pixels, for the first line of text only, similar to an indent</dd>
+<dd>x position relative to the text box object, in pixels, for the first line of text only, similar to an indent. defaults to 0.</dd>
 <dt class="number">xStopPos</dt>
-<dd>x position where text must stop flowing on the last line of text only.  If ellipses are applied, the ellipses must also stop at this location.  
+<dd>x position where text must stop flowing on the last line of text only.  If ellipses are applied, the ellipses must also stop at this location.  defaults to 0.
 <br/>NOTE:  xStartPos and xStopPos are only applied when horizontalAlign=LEFT.
 <br/>NOTE:  xStopPos can only be applied when truncation is true.</dd>
 <dt class="boolean">ellipsis</dt>
-<dd>indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE.</dd>
+<dd>indicates if ellipsis shall be shown when truncation occurs. Ignored if truncation=NONE. defaults to false.</dd>
 <dt class="number">truncation</dt>
-<dd>see <a href="#truncation">truncation constants</a></dd>
+<dd>see <a href="#truncation">truncation constants</a>.  defaults to NONE.</dd>
 <dt class="number">alignHorizontal</dt>
-<dd>see <a href="#alignHorizontal">horizontal alignment constants</a></dd>
+<dd>see <a href="#alignHorizontal">horizontal alignment constants</a>. defaults to LEFT.</dd>
 <dt class="number">alignVertical</dt>
-<dd>see <a href="#alignVertical">vertical alignment constants</a></dd>
+<dd>see <a href="#alignVertical">vertical alignment constants</a>. defaults to TOP.</dd>
 <dt class="number">leading</dt>
-<dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.</dd>
+<dd>number of pixels of height to apply between lines of text when multiple lines of text exist.  May be negative.  defaults to 0.</dd>
 </dd>
 <dt class="object">measureText</dt>
 <dd>returns an object with the following properties (measurements are relative to (x,y) of the TextBox object):
