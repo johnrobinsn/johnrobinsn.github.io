@@ -217,6 +217,7 @@ A 2d scene graph API supporting the following:
 <hr/>
 <br/><br/>
 <h2><a name="text"></a><code>Text</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
+Text height and width are determined at runtime based on the text value, font, pixelSize, etc.
 <h3>Properties</h3>
 <dt class="string">text</dt>
 <dd>specifies the text to render</dd>
@@ -233,6 +234,7 @@ A 2d scene graph API supporting the following:
 <hr/>
 <br/><br/>
 <h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
+Unlike <a href="#text"><code>Text</code></a>, the height and width of TextBox does NOT change based on the text value; instead, the height and width values in constructor and assignments are respected, and the text is rendered within those dimensions, according to the property values, below.
 <h3>Properties</h3>
 <dt class="boolean">wordWrap</dt>
 <dd>when width > 0, and wordWrap is true, wraps text at width of text box. defaults to false.</dd>
