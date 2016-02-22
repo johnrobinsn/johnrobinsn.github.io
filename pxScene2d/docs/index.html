@@ -235,6 +235,26 @@ Text height and width are determined at runtime based on the text value, font, p
 <br/><br/>
 <h2><a name="textBox"></a><code>TextBox</code> instance inherits from <a href="#text"><code>Text</code></a></h2>
 Unlike <a href="#text"><code>Text</code></a>, the height and width of TextBox does NOT change based on the text value; instead, the height and width values in constructor and assignments are respected, and the text is rendered within those dimensions, according to the property values, below.
+<br/><br/>
+<div>Behaviors for alignment, wordWrap and clip:
+<ul>
+<li>If truncation is none and wrap is true, then the text will continue to flow beyond the height of the bounding rectangle, possibly cut off if clip is applied.</li>
+
+<li>If truncation is none, and wrap is false, then the line(s) (that /n case has to be taken into consideration) should be centered in the view, even if the text goes beyond its x/width boundaries.  If clip is true, text is cut off on either end.  Such as:
+<br/><br/>
+<ul/>alignHorizontal CENTER
+<br/><ul>The qu|ick brown fox jumped over the la|zy dog</ul>
+<ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|ick brown fox jumped over the la|</ul>
+<br/>
+Or
+<br/><br/>
+alignHorizontal RIGHT
+<br/><ul>The quick br|own fox jumped over the lazy dog|</ul>
+<ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|own fox jumped over the lazy dog|</ul>
+</li>
+</ul>
+</ul>
+</div>
 <h3>Properties</h3>
 <dt class="boolean">wordWrap</dt>
 <dd>when width > 0, and wordWrap is true, wraps text at width of text box. defaults to false.</dd>
