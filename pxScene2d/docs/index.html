@@ -149,8 +149,12 @@ A 2d scene graph API supporting the following:
 <dd>removes this object from the scene</dd>
 <dt class="void">removeAll</dt>
 <dd>removes all children and their descendents from the scene.</dd>
-<dt class="promise">animateTo(json, duration, tween, type)</dt>
-<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  Type (option) determines whether the animation ends, loops or oscillates. (See <a href="#animation">animation constants</a> for valid values.)Returns a promise that will fulfill when the animation is complete.</dd>
+<dt class="promise">animateTo(json, duration, tween, type, count)</dt>
+<dd>tween the object's properties to the targets specified over the specified duration using the tween function.
+Tween indicates the interpolator to be used for the animation.  See <a href="#animation">animation constants</a> for valid values.)  
+Type (option) determines whether the animation loops or oscillates. 
+(See <a href="#animation">animation constants</a> for valid values.) 
+Returns a promise that will fulfill when the animation is complete.</dd>
 <dt class="void">on(string, function)</dt>
 <dd>registers a function callback for the specified event:
 <li>onMouseDown - parameter object has properties: x, y, flags </li>
@@ -333,40 +337,50 @@ alignHorizontal RIGHT
 <h2><a name="animation"></a><code>animation Constants</code></h2>
 <hr/>
 <h3>Properties</h3>
+<hr/>
+<h4>Interpolators</h4>
 <dl>
 <dt class="array">interpolators</dt>
 <dd>returns a collection of valid TWEEN_ and EASE_ interpolator constants</dd>
 <dt class="number">TWEEN_LINEAR</dt>
-<dd>constant for specifying a linear tween</dd>
+<dd>constant for specifying a linear tween. constant value is 0.</dd>
 <dt class="number">TWEEN_EXP1</dt>
-<dd>constant for specifying a exp1 tween</dd>
+<dd>constant for specifying a exp1 tween. constant value is 1.</dd>
 <dt class="number">TWEEN_EXP2</dt>
-<dd>constant for specifying a exp2 tween</dd>
+<dd>constant for specifying a exp2 tween. constant value is 2.</dd>
 <dt class="number">TWEEN_EXP3</dt>
-<dd>constant for specifying a exp3 tween</dd>
+<dd>constant for specifying a exp3 tween. constant value is 3.</dd>
 <dt class="number">TWEEN_STOP</dt>
-<dd>constant for specifying a stop (easein) tween</dd>
+<dd>constant for specifying a stop (easein) tween. constant value is 4.</dd>
 <dt class="number">EASE_IN_QUAD</dt>
-<dd>constant for specifying a "inquad" tween</dd>
+<dd>constant for specifying a "inquad" tween. constant value is 5.</dd>
 <dt class="number">EASE_IN_CUBIC</dt>
-<dd>constant for specifying a "incubic" tween</dd>
+<dd>constant for specifying a "incubic" tween. constant value is 6.</dd>
 <dt class="number">EASE_IN_BACK</dt>
-<dd>constant for specifying a "inback" tween</dd>
+<dd>constant for specifying a "inback" tween. constant value is 7.</dd>
 <dt class="number">EASE_IN_ELASTiC</dt>
-<dd>constant for specifying a "easeinelastic" tween</dd>
+<dd>constant for specifying a "easeinelastic" tween. constant value is 8.</dd>
 <dt class="number">EASE_OUT_ELASTIC</dt>
-<dd>constant for specifying a "easeoutelastic" tween</dd>
+<dd>constant for specifying a "easeoutelastic" tween. constant value is 9.</dd>
 <dt class="number">EASE_OUT_BOUNCE</dt>
-<dd>constant for specifying a "easeoutbounce" tween</dd>
+<dd>constant for specifying a "easeoutbounce" tween. constant value is 10.</dd>
 </dl>
+<hr/>
+<h4>Options</h4>
 <dl>
-<dt class="number">OPTION_END</dt>
-<dd>constant for use as the type in the animateTo method.  the animation will end.</dd>
 <dt class="number">OPTION_OSCILLATE</dt>
-<dd>constant for use as the type in the animateTo method. the animation with oscillate back and forth.</dd>
+<dd>constant for use as the type in the animateTo method. the animation with oscillate back and forth. constant value is 1.</dd>
 <dt class="number">OPTION_LOOP</dt>
-<dd>constant for use as the type in the animateTo method.  the animation will loop continuously.</dd>
+<dd>constant for use as the type in the animateTo method.  the animation will loop continuously. constant value is 2.</dd>
+<dt class="number">OPTION_FASTFORWARD</dt>
+<dd>constant for use as an option in the animateTo method.  This value can be OR'd with the OPTION type to indicate that any animations in progress should fastforward to their ending values. constant value is 8.</dd>
+<dt class="number">OPTION_REWIND</dt>
+<dd>constant for use as the type in the animateTo method. This value can be OR'd with the OPTION type to indicate that any animations in progress should rewind to their beginning values.  constant value is 2.</dd>
 </dl>
+<hr/>
+<h4>Count</h4>
+<dt class="number">COUNT_FOREVER</dt>
+<dd>constant to use as count to indicate the animation should never end. When using this value, the promise for the animation will resolve immediately.  constant value is -1.</dd>
 <hr/>
 <br/><br/>
 
@@ -375,11 +389,11 @@ alignHorizontal RIGHT
 <h3>Properties</h3>
 <dl>
 <dt class="number">NONE</dt>
-<dd>constant for use in image stretch options</dd>
+<dd>constant for use in image stretch options. constant value is 0.</dd>
 <dt class="number">STRETCH</dt>
-<dd>constant for use in image stretch options</dd>
+<dd>constant for use in image stretch options. constant value is 1.</dd>
 <dt class="number">REPEAT</dt>
-<dd>constant for use in image stretch options</dd>
+<dd>constant for use in image stretch options. constant value is 2.</dd>
 </dl>
 <hr/>
 <br/><br/>
@@ -389,11 +403,11 @@ alignHorizontal RIGHT
 <h3>Properties</h3>
 <dl>
 <dt class="number">TOP</dt>
-<dd>begin text at the upper-most y-coordinate of the <a href="#textBox">textBox</a></dd>
+<dd>begin text at the upper-most y-coordinate of the <a href="#textBox">textBox</a>. constant value is 0.</dd>
 <dt class="number">CENTER</dt>
-<dd>center text vertically within the <a href="#textBox">textBox</a></dd>
+<dd>center text vertically within the <a href="#textBox">textBox</a>. constant value is 1.</dd>
 <dt class="number">BOTTOM</dt>
-<dd>justify text to the bottom of the <a href="#textBox">textBox</a></dd>
+<dd>justify text to the bottom of the <a href="#textBox">textBox</a>. constant value is 2.</dd>
 </dl>
 <hr/>
 <br/><br/>
@@ -403,11 +417,11 @@ alignHorizontal RIGHT
 <h3>Properties</h3>
 <dl>
 <dt class="number">LEFT</dt>
-<dd>left-justify text in the <a href="#textBox">textBox</a></dd>
+<dd>left-justify text in the <a href="#textBox">textBox</a>. constant value is 0.</dd>
 <dt class="number">CENTER</dt>
-<dd>center text horizontally in the <a href="#textBox">textBox</a></dd>
+<dd>center text horizontally in the <a href="#textBox">textBox</a>. constant value is 1.</dd>
 <dt class="number">RIGHT</dt>
-<dd>right-justify text in the <a href="#textBox">textBox</a></dd>
+<dd>right-justify text in the <a href="#textBox">textBox</a>. constant value is 2.</dd>
 </dl>
 <hr/>
 <br/><br/>
@@ -418,11 +432,11 @@ alignHorizontal RIGHT
 <h3>Properties</h3>
 <dl>
 <dt class="number">NONE</dt>
-<dd>text is not truncated</dd>
+<dd>text is not truncated. constant value is 0.</dd>
 <dt class="number">TRUNCATE</dt>
-<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  The last word may be partially truncated</dd>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  The last word may be partially truncated. constant value is 1.</dd>
 <dt class="number">TRUNCATE_AT_WORD</dt>
-<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  Truncation occurs at the word boundary.</dd>
+<dd>text is truncated at the bottom of the <a href="#textBox">textBox</a>.  Truncation occurs at the word boundary. constant value is 2.</dd>
 </dl>
 <hr/>
 <br/><br/>
