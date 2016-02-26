@@ -151,9 +151,9 @@ A 2d scene graph API supporting the following:
 <dd>removes all children and their descendents from the scene.</dd>
 <dt class="promise">animateTo(json, duration, tween, type, count)</dt>
 <dd>tween the object's properties to the targets specified over the specified duration using the tween function.
-Tween indicates the interpolator to be used for the animation.  See <a href="#animation">animation constants</a> for valid values.)  
-Type (option) determines whether the animation loops or oscillates. 
-(See <a href="#animation">animation constants</a> for valid values.) 
+<li>Tween indicates the interpolator to be used for the animation.  See <a href="#animation">animation constants</a> for valid values. Defaults to TWEEN_LINEAR.</li>  
+<li>Type (option) determines whether the animation loops or oscillates. See <a href="#animation">animation constants</a> for valid values. Defaults to OPTION_LOOP.</li>
+<li>Count is the number of times the animation should repeat.  Defaults to 1. Use OPTION_FOREVER to create an animation that won't end until canceled.</li>
 Returns a promise that will fulfill when the animation is complete.</dd>
 <dt class="void">on(string, function)</dt>
 <dd>registers a function callback for the specified event:
