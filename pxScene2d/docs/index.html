@@ -122,7 +122,7 @@ A 2d scene graph API supporting the following:
 <dt class="number">r</dt>
 <dd>angle of rotation in degrees</dd>
 <dt class="string">id</dt>
-<dd>associated string identifier for the object</dd>
+<dd>user-assigned associated string identifier for the object. defaults to "".</dd>
 <dt class="boolean">interactive</dt>
 <dd>determines whether the object is mouse interactive. defaults to true.</dd>
 <dt class="boolean">painting</dt>
@@ -171,6 +171,8 @@ Returns a promise that will fulfill when the animation is complete.</dd>
 </dd>
 <dt class="void">delListener(string, function)</dt>
 <dd>unregisters a function callback for the specified event</dd>
+<dt class="void">getObjectById(id)</dt>
+<dd>returns object with associated id.  search scope is this object and its children.</dd>
 <hr/>
 <br/><br/>
 <h2><a name="rectangle"></a><code>Rectangle</code> instance inherits from <a href="#object"><code>Object</code></a></h2>
