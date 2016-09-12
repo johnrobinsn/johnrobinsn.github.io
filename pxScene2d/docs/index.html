@@ -79,13 +79,13 @@ A 2d scene graph API supporting the following:
 <li>onMouseDown - parameter object has properties: x, y, flags </li>
 <li>onMouseUp - parameter object hasproperties: x, y, flags </li>
 <li>onMouseMove - parameter object has properties: x, y </li>
-<li>onMouseEnter </li>
-<li>onMouseLeave </li>
-<li>onFocus </li>
-<li>onBlur </li>
-<li>onKeyDown  - parameter object has properties: target, keyCode, flags </li>
-<li>onKeyUp  - parameter object has properties: target, keyCode, flags </li>
-<li>onChar  - parameter object has properties: target, charCode</li>
+<li>onMouseEnter  - parameter object has properties: target, stopPropagation()   </li>
+<li>onMouseLeave  - parameter object has properties: target, stopPropagation()  </li>
+<li>onFocus  - parameter object has properties: target, stopPropagation()  </li>
+<li>onBlur  - parameter object has properties: target, stopPropagation()  </li>
+<li>onKeyDown  - parameter object has properties: target, keyCode, flags, stopPropagation() </li>
+<li>onKeyUp  - parameter object has properties: target, keyCode, flags, stopPropagation() </li>
+<li>onChar  - parameter object has properties: target, charCode, stopPropagation()</li>
 <li>onResize - parameter object has properties w, h</li>
 </dd>
 <dt class="void">delListener(string, function)</dt>
