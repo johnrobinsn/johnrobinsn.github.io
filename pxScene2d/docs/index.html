@@ -149,6 +149,10 @@ A 2d scene graph API supporting the following:
 <dd>removes this object from the scene</dd>
 <dt class="void">removeAll</dt>
 <dd>removes all children and their descendents from the scene.</dd>
+<dt class="void">moveToFront</dt>
+<dd>Moves this child to the top of the z-order within its siblings</dd>
+<dt class="void">moveToBack</dt>
+<dd>Moves this child to the bottom of the z-order within its siblings</dd>
 <dt class="promise">animateTo(json, duration, tween, type, count)</dt>
 <dd>tween the object's properties to the targets specified over the specified duration using the tween function.
 <li>Tween indicates the interpolator to be used for the animation.  See <a href="#animation">animation constants</a> for valid values. Defaults to TWEEN_LINEAR.</li>  
