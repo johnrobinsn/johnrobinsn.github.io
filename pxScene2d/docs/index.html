@@ -153,10 +153,16 @@ A 2d scene graph API supporting the following:
 <dd>Moves this child to the bottom of the z-order within its siblings</dd>
 <dt class="promise">animateTo(json, duration, tween, type, count)</dt>
 <dd>tween the object's properties to the targets specified over the specified duration using the tween function.
-<li>Tween indicates the interpolator to be used for the animation.  See <a href="#animation">animation constants</a> for valid values. Defaults to TWEEN_LINEAR.</li>  
-<li>Type (option) determines whether the animation loops or oscillates. See <a href="#animation">animation constants</a> for valid values. Defaults to OPTION_LOOP.</li>
+<li>Tween indicates the interpolator to be used for the animation.  See <a href="#animation_interpolators">animation constants</a> for valid values. Defaults to TWEEN_LINEAR.</li>  
+<li>Type (option) determines whether the animation loops or oscillates. See <a href="#animation_options">animation constants</a> for valid values. Defaults to OPTION_LOOP.</li>
 <li>Count is the number of times the animation should repeat.  Defaults to 1. Use COUNT_FOREVER to create an animation that won't end until canceled.</li>
 Returns a promise that will fulfill when the animation is complete.</dd>
+<dt class="object">animate(json, duration, tween, type, count)</dt>
+<dd>tween the object's properties to the targets specified over the specified duration using the tween function.  </li>
+<li>Tween indicates the interpolator to be used for the animation.  See <a href="#animation_interpolators">interpolator animation constants</a> for valid values. Defaults to TWEEN_LINEAR.</li>  
+<li>Type (option) determines whether the animation loops or oscillates. See <a href="#animation_options">option animation constants</a> for valid values. Defaults to OPTION_LOOP.</li>
+<li>Count is the number of times the animation should repeat.  Defaults to 1. Use COUNT_FOREVER to create an animation that won't end until canceled.</li>
+Returns an <a href="#Animate">Animate</a> object that can be used to cancel or check on status of the animation.</dd>
 <dt class="void">on(string, function)</dt>
 <dd>registers a function callback for the specified event:
 <li>onMouseDown - parameter object has properties: x, y, flags </li>
@@ -339,16 +345,61 @@ alignHorizontal RIGHT
 </dd>
 <hr/>
 <br/><br/>
+<h2><a name="Animate"></a><code>Animate</code></h2>
+The Animate object is returned from the animate() method. It can be used to check on the status of an animation, as well as to cancel the animation. 
+<br/><br/>
+<h3>Properties</h3>
+<dt class="promise">done</dt>
+<dd>Promise that indicates completion of the animation</dd>
+<dt class="number">type</dt>
+<dd>the type (option) of the animation, e.g. whether the animation loops or oscillates. See <a href="#animation_options">option animation constants</a> for valid values. (Read only)</dd>
+<dt class="number">interp</dt>
+<dd>Indicates the interpolator used for this animation. See <a href="#animation_interpolators">interpolator animation constants</a> for valid values. (Read only)</dd>
+<dt class="string">status</dt>
+<dd>status of the animation. See <a href="#animation_status">status animation constants</a> for valid values. Note that this is the constant name returned as a string rather than as its numeric value. (Read only)</dd>
+<dt class="number">provduration</dt>
+<dd>duration value used when the animate function was called (Read only)</dd>
+<dt class="number">provcount</dt>
+<dd>count value used when the animate function was called. Could be positive numeric value or a constant. See <a href="#animation_status">animation constants</a> for valid constant values. (Read only)/dd>
+<dt class="boolean">cancelled</dt>
+<dd>reflects whether or not the animation has been canceled. (Read only)</dd>
+<dt class="object">props</dt>
+<dd>object whose properties are the properties that are being animated, and those property values are the target values for the animation</dd>
+<dt class="object">details</dt>
+<dd>object whose properties are the properties that are being animated, and those property values are an <a href="#AnimationDetail">AnimationDetail</a> object reflecting the current state of the animation for that property.</dd>
+</dd>
+<hr/>
+<h3>Methods</h3>
+<dt class="object">cancel()</dt>
+<dd>Cancels the animation.</dd>
+<hr/>
+<br/><br/>
+<h2><a name="AnimationDetail"></a><code>AnimationDetail</code></h2>
+<h3>Properties</h3>
+<dt class="number">from</dt>
+<dd>the start value for the current state of this animation. (Read only)</dd>
+<dt class="number">to</dt>
+<dd>the end value for the current state of this animation. (Read only)</dd>
+<dt class="number">duration</dt>
+<dd>the duration value for the current state of this animation. (Read only)</dd>
+<dt class="number">count</dt>
+<dd>current count number for this animation. (Read only)</dd>
+<dt class="string">status</dt>
+<dd>current status for this animation. See <a href="#animation_status">status animation constants</a> for valid values. Note that this is the constant name returned as a string rather than as its numeric value. (Read only)</dd>
+</dd>
+<hr/>
+<br/><br/>
+
 
 <h2><a name="animation"></a><code>animation Constants</code></h2>
-<hr>http://www.pxscene.org/examples/px-reference/gallery/dynamics.js demonstrates the different animations available.</hr>
+<hr>http://www.pxscene.org/examples/px-reference/gallery/dynamics.js demonstrates the different animation interpolators available.</hr>
 
 <hr/>
 <h3>Properties</h3>
 <hr/>
+<a name="animation_interpolators"></a>
 <h4>Interpolators</h4>
 <dl>
-<dt class="array">interpolators</dt>
 <dd>returns a collection of valid TWEEN_ and EASE_ interpolator constants</dd>
 <dt class="number">TWEEN_LINEAR</dt>
 <dd>constant for specifying a linear tween. constant value is 0.</dd>
@@ -374,6 +425,7 @@ alignHorizontal RIGHT
 <dd>constant for specifying a "easeoutbounce" tween. constant value is 10.</dd>
 </dl>
 <hr/>
+<a name="animation_options"></a>
 <h4>Options</h4>
 <dl>
 <dt class="number">OPTION_OSCILLATE</dt>
@@ -386,9 +438,27 @@ alignHorizontal RIGHT
 <dd>constant for use as the type in the animateTo method. This value can be OR'd with the OPTION type to indicate that any animations in progress should rewind to their beginning values.  constant value is 2.</dd>
 </dl>
 <hr/>
+<a name="animation_count"></a>
 <h4>Count</h4>
+<dl>
 <dt class="number">COUNT_FOREVER</dt>
 <dd>constant to use as count to indicate the animation should never end. When using this value, the promise for the animation will resolve immediately.  constant value is -1.</dd>
+</dl>
+<hr/>
+<hr/>
+<a name="animation_status"></a>
+<h4>Status</h4>
+<dl>
+<dt class="number">IDLE</dt>
+<dd>constant to indicate that the animation has not yet started. constant value is 0.</dd>
+<dt class="number">INPROGRESS</dt>
+<dd>constant to indicate that the animation is in progress. constant value is 1.</dd>
+<dt class="number">CANCELLED</dt>
+<dd>constant to indicate that the animation has been cancelled. constant value is 2.</dd>
+<dt class="number">ENDED</dt>
+<dd>constant to indicate that the animation has ended. constant value is 3.</dd>
+</dl>
+<hr/>
 <hr/>
 <br/><br/>
 
