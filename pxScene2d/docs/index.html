@@ -310,10 +310,12 @@ alignHorizontal RIGHT
 
 <br/><br/>
 <h2><a name="resource"></a><code>Resource</code> instance</h2>
- Note: Once Resource is created, the url is readonly.
+ Note: Once Resource is created, the url and proxy are readonly.
 <h3>Properties</h3>
 <dt class="string">url</dt>
 <dd>url to the resource to be loaded</dd>
+<dt class="string">proxy</dt>
+<dd>http proxy url to be used while downloading</dd>
 <dt class="promise">ready</dt>
 <dd>returns a promise when the resource is loaded (Read only)</dd>
 <dt class="array">loadStatus</dt>
